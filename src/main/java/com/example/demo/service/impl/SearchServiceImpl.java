@@ -46,32 +46,38 @@ public class SearchServiceImpl implements SearchService {
     }
 
     @Override
-    public void createIndex(String indexName) {
+    public void createIndex(String indexName, Class<? extends Object> type) {
         IndexOperations ops = elasticsearchRestTemplate.indexOps(IndexCoordinates.of(indexName));
         if (ops.exists()) ops.delete();
         ops.create();
         ops.refresh();
-        ops.putMapping(ops.createMapping());
+        ops.putMapping(ops.createMapping(type));
+    }
+
+//    @Override
+//    public void createIndex(Class<? extends Object> type) {
+//        IndexOperations ops = elasticsearchRestTemplate.indexOps(type);
+//        if (ops.exists()) ops.delete();
+//        ops.create();
+//        ops.refresh();
+//        ops.putMapping(ops.createMapping());
+//    }
+
+    public Boolean isIndexExist(String indexName) {
+        IndexOperations indexOps = elasticsearchRestTemplate.indexOps(IndexCoordinates.of(indexName));
+        return indexOps.exists();
     }
 
     @Override
-    public void createIndex(Class<? extends Object> type) {
-        IndexOperations ops = elasticsearchRestTemplate.indexOps(type);
-        if (ops.exists()) ops.delete();
-        ops.create();
-        ops.refresh();
-        ops.putMapping(ops.createMapping());
+    public Boolean deleteIndexByName(String indexName) {
+        IndexOperations indexOps = elasticsearchRestTemplate.indexOps(IndexCoordinates.of(indexName));
+        return indexOps.delete();
     }
 
-    @Override
-    public void deleteIndex(String indexName) {
-        elasticsearchRestTemplate.indexOps(IndexCoordinates.of(indexName)).delete();
-    }
-
-    @Override
-    public void deleteIndex(Class<?> type) {
-        elasticsearchRestTemplate.indexOps(type).delete();
-    }
+//    @Override
+//    public void deleteIndex(Class<?> type) {
+//        elasticsearchRestTemplate.indexOps(type).delete();
+//    }
 
     @Override
     public void deleteProduct(Product product){
