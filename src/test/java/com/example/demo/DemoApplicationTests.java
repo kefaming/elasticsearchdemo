@@ -1,6 +1,8 @@
 package com.example.demo;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.demo.exception.BizException;
 import com.example.demo.mapper.StorageMapper;
 import com.example.demo.model.Storage;
@@ -34,8 +36,19 @@ class DemoApplicationTests {
     @Resource
     private StorageMapper storageMapper;
 
-    // 测试mybatis plus
+    // 测试mybatis plus 分页
     @Test
+    public void queryUserForPage(){
+        IPage<Storage> userPage = new Page<>(1, 2);//参数一是当前页，参数二是每页个数
+        userPage = storageMapper.selectPage(userPage, null);
+        List<Storage> list = userPage.getRecords();
+        for(Storage storage : list){
+            System.out.println(storage);
+        }
+    }
+
+    // 测试mybatis plus
+//    @Test
     public void testSelect() {
         System.out.println(("----- selectAll method test ------"));
         List<Storage> storageList = storageMapper.selectList(null);
