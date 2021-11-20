@@ -25,7 +25,7 @@ import java.util.concurrent.TimeUnit;
  */
 @SpringBootTest
 @Slf4j
-class DemoApplicationTests {
+class DistributedLockTests {
 
     @Autowired
     private RedissonClient redissonClient;
@@ -36,61 +36,8 @@ class DemoApplicationTests {
     @Resource
     private StorageMapper storageMapper;
 
-    // 测试mybatis plus 分页
-    @Test
-    public void queryUserForPage(){
-        IPage<Storage> userPage = new Page<>(1, 2);//参数一是当前页，参数二是每页个数
-        userPage = storageMapper.selectPage(userPage, null);
-        List<Storage> list = userPage.getRecords();
-        for(Storage storage : list){
-            System.out.println(storage);
-        }
-    }
-
-    // 测试mybatis plus
-//    @Test
-    public void testSelect() {
-        System.out.println(("----- selectAll method test ------"));
-        List<Storage> storageList = storageMapper.selectList(null);
-        Assertions.assertEquals(1, storageList.size());
-        storageList.forEach(System.out::println);
-
-        Storage s = storageMapper.selectById("1");
-        System.out.println(s);
-    }
-
-
-    // 分布式ID
-//    @Test
-    void distributedId() {
-
-        int orderId = new Random().nextInt(1000);
-        log.debug(String.valueOf(orderId));
-
-        String key = "dec_store_lock_" + orderId;
-        RLock lock = redissonClient.getLock(key);
-        try {
-            //加锁 操作很类似Java的ReentrantLock机制
-            lock.lock(); // 也可用下面的写法
-            // boolean res = lock.tryLock(3, 10, TimeUnit.SECONDS); //尝试加锁，最多等待3秒，上锁以后10秒自动解锁
-            // if(res){
-            //     // do your business
-            // }
-
-            Long userId = serialService.getNextValue("SEQ_USER_ID");
-            System.out.println("=============== 分布式ID: " + userId + " ===============");
-
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            e.printStackTrace();
-        } finally {
-            //解锁
-            lock.unlock();
-        }
-    }
-
     // 分布式锁
-//    @Test
+    @Test
     void distributedLock() {
 
         int orderId = new Random().nextInt(1000);

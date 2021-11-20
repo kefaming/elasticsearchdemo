@@ -15,7 +15,9 @@ spring:
 #  mapper-locations: classpath:mapper/*.xml
 #  type-aliases-package: com.example.demo.mapper # 在mapper文件中实体类前不用写包名
 
-
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 logging:
   level:
