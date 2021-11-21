@@ -13,6 +13,7 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 import org.springframework.data.elasticsearch.core.IndexOperations;
 import org.springframework.data.elasticsearch.core.mapping.IndexCoordinates;
 
+import java.io.Serializable;
 import java.lang.annotation.Annotation;
 
 /**
@@ -21,7 +22,10 @@ import java.lang.annotation.Annotation;
 @Setter
 @Getter
 @Document(indexName = "product")
-public class Product {
+public class Product implements Serializable {
+
+	private static final long serialVersionUID = 7046085680099337423L;
+
 	@Id
 	private String  productId;
 

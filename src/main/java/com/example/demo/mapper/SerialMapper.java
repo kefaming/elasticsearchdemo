@@ -1,12 +1,10 @@
 package com.example.demo.mapper;
 
 import com.example.demo.model.Serial;
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.Map;
 
-@Mapper
 public interface SerialMapper {
 
     // 获取序号（调用存储过程）
