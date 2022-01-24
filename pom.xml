@@ -115,17 +115,13 @@
         </dependency>
 
         <dependency>
-            <groupId>com.github.kefaming</groupId>
-            <artifactId>uid-generator-boot-starter</artifactId>
-            <version>1.0.0.RELEASE</version>
+            <groupId>com.baidu.fsg</groupId>
+            <artifactId>uid-generator</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.mybatis</groupId>
-                    <artifactId>mybatis</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.mybatis</groupId>
-                    <artifactId>mybatis-spring</artifactId>
+                    <artifactId>*</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
